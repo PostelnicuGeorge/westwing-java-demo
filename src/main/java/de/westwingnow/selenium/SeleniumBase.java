@@ -2,12 +2,15 @@ package de.westwingnow.selenium;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.regex.Pattern;
 
 public abstract class SeleniumBase {
-	private WebDriver driver;
+	protected WebDriver driver;
 	private WebDriverWait wait;
 
 	public SeleniumBase(WebDriver driver) {
@@ -41,6 +44,24 @@ public abstract class SeleniumBase {
 		return element.getText().trim();
 	}
 
+	protected String getElementAttributeValue(WebElement element, String attributeName) {
+		Optional<String> attributeOrCssValue = getAttributeOrCssValue(element, attributeName);
+		return attributeOrCssValue.orElse("");
+	}
+
+	protected Optional<String> getAttributeOrCssValue(WebElement element, String name) {
+		String value = element.getAttribute(name);
+		if (value == null || value.isEmpty()) {
+			value = element.getCssValue(name);
+		}
+
+		if (value == null || value.isEmpty()) {
+			return Optional.empty();
+		}
+
+		return Optional.of(value.trim());
+	}
+
 	protected void clickButton(WebElement button) {
 		scrollToElement(button);
 		button.click();
@@ -54,6 +75,10 @@ public abstract class SeleniumBase {
 	                                                     boolean throwException) {
 		return untilCondition(SeleniumConditions.numberOfChildElementsToBe(element, locator, number),
 				throwException);
+	}
+
+	protected boolean waitUntilTextMatches(By locator, Pattern pattern, boolean throwException) {
+		return untilCondition(ExpectedConditions.textMatches(locator, pattern), throwException);
 	}
 
 	protected boolean untilCondition(ExpectedCondition<Boolean> expectedCondition,
@@ -76,11 +101,6 @@ public abstract class SeleniumBase {
 
 	protected boolean untilElement(ExpectedCondition<WebElement> expectedCondition,
 	                                    boolean throwException) {
-		WebDriverWait wait = new WebDriverWait(driver, 15);
-//		wait.ignoring(StaleElementReferenceException.class);
-		wait.ignoring(NoSuchElementException.class);
-		wait.ignoring(NullPointerException.class);
-		wait.ignoring(WebDriverException.class);
 		try {
 			wait.until(expectedCondition);
 		} catch (Exception e) {

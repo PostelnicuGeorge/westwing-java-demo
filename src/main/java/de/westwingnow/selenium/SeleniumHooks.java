@@ -21,7 +21,7 @@ public abstract class SeleniumHooks {
 		webDriver = new ChromeDriver(getChrome());
 	}
 
-	private static ChromeOptions getChrome() {
+	public static ChromeOptions getChrome() {
 		ChromeOptions options = new ChromeOptions();
 		options.addArguments("--ignore-certificate-errors");
 		return options;
