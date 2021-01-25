@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Objects;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
 public class Controller {
 	private Properties properties;
@@ -47,7 +48,10 @@ public class Controller {
 
 	private void setupWebDriver() {
 		System.setProperty("webdriver.chrome.driver", "/home/devlin/temp/selenium/drivers/chrome/chromedriver");
-		webDriver = new ChromeDriver();
+		webDriver = new ChromeDriver(getChrome());
+		webDriver.manage().deleteAllCookies();
+		webDriver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
+		webDriver.manage().timeouts().setScriptTimeout(360, TimeUnit.SECONDS);
 		webDriver.manage().window().maximize();
 	}
 

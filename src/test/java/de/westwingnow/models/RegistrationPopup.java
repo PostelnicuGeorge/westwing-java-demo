@@ -45,6 +45,7 @@ public class RegistrationPopup extends SeleniumBase {
 		switch (dataIdentifier) {
 			default:
 			case POPUP_PROMO_VALUE:
+				waitUntilElementToBeVisibleAndNotMoving(SWITCH_TO_LOGIN_LOCATOR, false);
 				clickButton(getElement(SWITCH_TO_LOGIN_LOCATOR));
 				waitUntilInvisibilityOfElement(backdrop, true);
 				break;

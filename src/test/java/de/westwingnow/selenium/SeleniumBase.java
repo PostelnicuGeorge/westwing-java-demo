@@ -96,6 +96,43 @@ public abstract class SeleniumBase {
 		return untilCondition(ExpectedConditions.attributeContains(element, attribute, value), throwException);
 	}
 
+	protected boolean waitUntilElementToBeVisibleAndNotMoving(By elementLocator, boolean throwException) {
+
+		return untilCondition(ExpectedConditions.and(
+				ExpectedConditions.visibilityOfElementLocated(elementLocator),
+				getElementIsNotMovingCondition(elementLocator)), throwException);
+	}
+
+	public ExpectedCondition<WebElement> getElementIsNotMovingCondition(By elementLocator) {
+		return new ExpectedCondition<WebElement>() {
+			private Point currentLocation;
+			private int counter = 0;
+
+			@Override
+			public WebElement apply(WebDriver driver) {
+				try {
+					WebElement element = driver.findElement(elementLocator);
+					if (element != null) {
+						Point location = element.getLocation();
+						if (location != null) {
+							if (location.equals(currentLocation)) {
+								counter++;
+							}
+							currentLocation = location;
+							if (counter > 0) {
+								return element;
+							}
+						}
+					}
+				} catch (Exception ignored) {
+				}
+				return null;
+			}
+
+		};
+	}
+
+
 	protected boolean untilCondition(ExpectedCondition<Boolean> expectedCondition,
 	                                 boolean throwException) {
 

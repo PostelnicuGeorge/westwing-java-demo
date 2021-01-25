@@ -1,6 +1,7 @@
 package de.westwingnow.glue;
 
 import de.westwingnow.models.WestwingNowHomePage;
+import de.westwingnow.models.WestwingNowWishlistPage;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -11,6 +12,7 @@ import java.util.Properties;
 
 public class WestwingNowHomePageSteps {
 	private WestwingNowHomePage homePage;
+	private WestwingNowWishlistPage wishListPage;
 	private final WebDriver webDriver;
 	private final Properties properties;
 
@@ -58,11 +60,12 @@ public class WestwingNowHomePageSteps {
 
 	@And("I go to the wish list page ​{string}")
 	public void iGoToTheWishListPage​(String url) {
-		throw new UnsupportedOperationException("iDeleteTheFirstProductFromMyWishList");
+		webDriver.get(url);
+		wishListPage = new WestwingNowWishlistPage(webDriver);
 	}
 
 	@And("I delete the first product from my wish list")
 	public void iDeleteTheFirstProductFromMyWishList() {
-		throw new UnsupportedOperationException("iDeleteTheFirstProductFromMyWishList");
+		wishListPage.delete();
 	}
 }
