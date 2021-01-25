@@ -47,7 +47,7 @@ public class Controller {
 
 	private void setupWebDriver() {
 		System.setProperty("webdriver.chrome.driver", "/home/devlin/temp/selenium/drivers/chrome/chromedriver");
-		webDriver = new ChromeDriver(getChrome());
+		webDriver = new ChromeDriver();
 		webDriver.manage().window().maximize();
 	}
 

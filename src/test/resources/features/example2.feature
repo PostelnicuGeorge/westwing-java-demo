@@ -1,7 +1,7 @@
 Feature: Task-2
 
   Scenario: Click on wish list from first generic product in Möbel then login and remove item from wish list
-    Given I am on the WestwingNow home page "​https://www.westwingnow.de​"
+    Given I am on the WestwingNow home page "https://www.westwingnow.de​"
     When I click on "Möbel"
     Then I should see product listing page with a list of products
     When I click on wish list icon of the first found product

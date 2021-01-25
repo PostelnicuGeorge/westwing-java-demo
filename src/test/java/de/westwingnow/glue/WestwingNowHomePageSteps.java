@@ -17,13 +17,12 @@ public class WestwingNowHomePageSteps {
 	public WestwingNowHomePageSteps(Controller controller) {
 		this.webDriver = controller.getWebDriver();
 		this.properties = controller.getProperties();
+		this.homePage = new WestwingNowHomePage(webDriver, properties);
 	}
 
 	@Given("I am on the WestwingNow home page {string}")
 	public void iAmOnTheWestwingNowHomePage(String url) {
-		System.out.println(url);
-		webDriver.get(url);
-		homePage = new WestwingNowHomePage(webDriver, properties);
+		homePage.init(url);
 	}
 
 	@When("I click on {string}")

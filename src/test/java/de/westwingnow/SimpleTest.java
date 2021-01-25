@@ -19,8 +19,9 @@ public class SimpleTest {
 			System.setProperty("webdriver.chrome.driver", "/home/devlin/temp/selenium/drivers/chrome/chromedriver");
 			webDriver = new ChromeDriver(new Controller().getChrome());
 			webDriver.manage().window().maximize();
-			webDriver.get("https://www.westwingnow.de");
+//			webDriver.get("https://www.westwingnow.de");
 			WestwingNowHomePage homePage = new WestwingNowHomePage(webDriver, properties);
+			homePage.init("https://www.westwingnow.de");
 			homePage.clickNavigation("Möbel");
 			homePage.wishListFirstGenericProduct();
 			System.out.println("ASDF");
