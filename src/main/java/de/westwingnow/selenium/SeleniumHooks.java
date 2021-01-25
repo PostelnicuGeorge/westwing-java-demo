@@ -1,5 +1,6 @@
 package de.westwingnow.selenium;
 
+import de.westwingnow.SimpleTest;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
@@ -12,13 +13,16 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
 
 import java.util.Objects;
+import java.util.Properties;
 
 public abstract class SeleniumHooks {
 	protected WebDriver webDriver;
+	protected Properties properties;
 
 	@Before
 	public void initWebDriver() {
 		webDriver = new ChromeDriver(getChrome());
+		properties = SimpleTest.initProperties();
 	}
 
 	public static ChromeOptions getChrome() {

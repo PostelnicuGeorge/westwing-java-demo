@@ -63,12 +63,19 @@ public abstract class SeleniumBase {
 	}
 
 	protected void clickButton(WebElement button) {
-		scrollToElement(button);
+//		scrollToElement(button);
 		button.click();
 	}
 
 	protected void scrollToElement(WebElement element) {
 		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
+	}
+
+	protected void insertTextIntoInput(WebElement webElement, String string) {
+		scrollToElement(webElement);
+		webElement.click();
+		webElement.clear();
+		webElement.sendKeys(string);
 	}
 
 	protected boolean waitUntilNumberOfChildElementsToBe(WebElement element, By locator, Integer number,
@@ -85,8 +92,12 @@ public abstract class SeleniumBase {
 		return this.untilCondition(ExpectedConditions.invisibilityOf(element), throwException);
 	}
 
+	protected boolean waitUntilAttributeContains(WebElement element, String attribute, String value, boolean throwException) {
+		return untilCondition(ExpectedConditions.attributeContains(element, attribute, value), throwException);
+	}
+
 	protected boolean untilCondition(ExpectedCondition<Boolean> expectedCondition,
-	                                      boolean throwException) {
+	                                 boolean throwException) {
 
 		try {
 			wait.until(expectedCondition);
@@ -104,7 +115,7 @@ public abstract class SeleniumBase {
 	}
 
 	protected boolean untilElement(ExpectedCondition<WebElement> expectedCondition,
-	                                    boolean throwException) {
+	                               boolean throwException) {
 		try {
 			wait.until(expectedCondition);
 		} catch (Exception e) {
