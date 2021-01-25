@@ -21,6 +21,7 @@ public class WestwingNowHomePageSteps {
 
 	@Given("I am on the WestwingNow home page {string}")
 	public void iAmOnTheWestwingNowHomePage(String url) {
+		System.out.println(url);
 		webDriver.get(url);
 		homePage = new WestwingNowHomePage(webDriver, properties);
 	}
@@ -57,9 +58,8 @@ public class WestwingNowHomePageSteps {
 	}
 
 	@And("I go to the wish list page ​{string}")
-	public void iGoToTheWishListPage​(String page) {
-		webDriver.get(page);
-		throw new UnsupportedOperationException("iGoToTheWishListPage");
+	public void iGoToTheWishListPage​(String url) {
+		throw new UnsupportedOperationException("iDeleteTheFirstProductFromMyWishList");
 	}
 
 	@And("I delete the first product from my wish list")

@@ -3,6 +3,8 @@ package de.westwingnow.glue;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.firefox.FirefoxProfile;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -59,9 +61,19 @@ public class Controller {
 		}
 	}
 
-	private ChromeOptions getChrome() {
+	public ChromeOptions getChrome() {
 		ChromeOptions options = new ChromeOptions();
 		options.addArguments("--ignore-certificate-errors");
+		return options;
+	}
+
+	private FirefoxOptions getFirefox() {
+		FirefoxOptions options = new FirefoxOptions();
+		FirefoxProfile profile = new FirefoxProfile();
+		profile.setPreference("ec.lock.homepage", false);
+		profile.setPreference("browser.startup.homepage", "about:blank");
+		options.setProfile(profile);
+		options.setAcceptInsecureCerts(true);
 		return options;
 	}
 }
