@@ -1,4 +1,4 @@
-package de.westwingnow.glue;
+package westwingnow.glue;
 
 import io.cucumber.java.After;
 import io.cucumber.java.Before;

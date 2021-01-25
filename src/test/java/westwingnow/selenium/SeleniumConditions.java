@@ -1,4 +1,4 @@
-package de.westwingnow.selenium;
+package westwingnow.selenium;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

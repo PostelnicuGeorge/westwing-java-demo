@@ -1,4 +1,4 @@
-package de.westwingnow;
+package westwingnow;
 
 import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;

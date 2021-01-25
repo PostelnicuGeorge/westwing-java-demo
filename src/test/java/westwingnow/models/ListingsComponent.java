@@ -1,6 +1,6 @@
-package de.westwingnow.models;
+package westwingnow.models;
 
-import de.westwingnow.selenium.SeleniumBase;
+import westwingnow.selenium.SeleniumBase;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

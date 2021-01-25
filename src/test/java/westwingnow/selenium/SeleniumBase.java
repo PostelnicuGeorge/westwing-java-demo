@@ -1,4 +1,4 @@
-package de.westwingnow.selenium;
+package westwingnow.selenium;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedCondition;
