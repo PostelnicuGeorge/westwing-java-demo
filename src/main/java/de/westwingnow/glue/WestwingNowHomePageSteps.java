@@ -14,9 +14,9 @@ public class WestwingNowHomePageSteps {
 	private final WebDriver webDriver;
 	private final Properties properties;
 
-	public WestwingNowHomePageSteps(WebDriver webDriver, Properties properties) {
-		this.webDriver = webDriver;
-		this.properties = properties;
+	public WestwingNowHomePageSteps(Controller controller) {
+		this.webDriver = controller.getWebDriver();
+		this.properties = controller.getProperties();
 	}
 
 	@Given("I am on the WestwingNow home page {string}")

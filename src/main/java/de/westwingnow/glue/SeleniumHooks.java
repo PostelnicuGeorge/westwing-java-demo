@@ -1,30 +1,24 @@
 package de.westwingnow.glue;
 
-import de.westwingnow.SimpleTest;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
 
-import java.util.Objects;
-import java.util.Properties;
-
 public class SeleniumHooks {
-	protected WebDriver webDriver;
-	protected Properties properties;
+	private final Controller controller;
+
+	public SeleniumHooks(Controller controller) {
+		this.controller = controller;
+	}
 
 	@Before
-	public void initWebDriver() {
-		System.setProperty("webdriver.chrome.driver", "/home/devlin/temp/selenium/drivers/chrome/chromedriver");
-		webDriver = new ChromeDriver(getChrome());
-		webDriver.manage().window().maximize();
-		properties = SimpleTest.initProperties();
+	public void setup() {
+		controller.setup();
 	}
 
 	public static ChromeOptions getChrome() {
@@ -46,11 +40,9 @@ public class SeleniumHooks {
 	@After
 	public void destroy(Scenario scenario) {
 		if (scenario.isFailed()) {
-			byte[] screenshot = ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.BYTES);
+			byte[] screenshot = ((TakesScreenshot) controller.getWebDriver()).getScreenshotAs(OutputType.BYTES);
 			scenario.attach(screenshot, "image/png", "name");
 		}
-		if (Objects.nonNull(webDriver)) {
-			webDriver.quit();
-		}
+		controller.destroy();
 	}
 }
