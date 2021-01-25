@@ -1,4 +1,4 @@
-package de.westwingnow.selenium;
+package de.westwingnow.glue;
 
 import de.westwingnow.SimpleTest;
 import io.cucumber.java.After;
@@ -15,13 +15,15 @@ import org.openqa.selenium.firefox.FirefoxProfile;
 import java.util.Objects;
 import java.util.Properties;
 
-public abstract class SeleniumHooks {
+public class SeleniumHooks {
 	protected WebDriver webDriver;
 	protected Properties properties;
 
 	@Before
 	public void initWebDriver() {
+		System.setProperty("webdriver.chrome.driver", "/home/devlin/temp/selenium/drivers/chrome/chromedriver");
 		webDriver = new ChromeDriver(getChrome());
+		webDriver.manage().window().maximize();
 		properties = SimpleTest.initProperties();
 	}
 

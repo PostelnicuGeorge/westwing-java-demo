@@ -44,13 +44,16 @@ public class WestwingNowHomePage extends SeleniumBase {
 		untilElement(ExpectedConditions.visibilityOfElementLocated(SELF_LOCATOR), true);
 		self = getElement(SELF_LOCATOR);
 		waitUntilNumberOfChildElementsToBe(self, HEADER_LOCATOR, 1, true);
-		untilElement(ExpectedConditions.visibilityOfElementLocated(COOKIES_ACCEPT_BUTTON_LOCATOR), true);
-		clickButton(getElement(COOKIES_ACCEPT_BUTTON_LOCATOR));
-
 		waitUntilNumberOfChildElementsToBe(self, APP_CONTENT_LOCATOR, 1, true);
+		waitAndDismissCookies();
 		header = getChildElement(self, HEADER_LOCATOR);
 		appContent = getChildElement(self, APP_CONTENT_LOCATOR);
 		headerIconsComponent = new HeaderIconsComponent(driver, header);
+	}
+
+	private void waitAndDismissCookies() {
+		untilElement(ExpectedConditions.visibilityOfElementLocated(COOKIES_ACCEPT_BUTTON_LOCATOR), true);
+		clickButton(getElement(COOKIES_ACCEPT_BUTTON_LOCATOR));
 	}
 
 	public void clickNavigation(String navigationName) {
@@ -64,7 +67,6 @@ public class WestwingNowHomePage extends SeleniumBase {
 				categoryResource = getElementAttributeValue(navigationButton, "href");
 				clickButton(navigationButton);
 				dismissPromoPopup();
-				listingsComponent = new ListingsComponent(driver, appContent, categoryName, categoryResource);
 				return;
 			}
 		}
@@ -75,24 +77,31 @@ public class WestwingNowHomePage extends SeleniumBase {
 	public void wishListFirstGenericProduct() {
 		if (Objects.nonNull(listingsComponent)) {
 			listingsComponent.wishListFirstGenericProduct();
-			if (!isLoggedIn) {
-				if (hasPopupAppeared(false)) {
-					RegistrationPopup popup = new RegistrationPopup(driver, getChildElement(self, POPUP_LOCATOR), properties);
-					popup.login();
-					waitUntilTextMatches(MY_ACCOUNT_LOCATOR, Pattern.compile(".*" +
-							properties.getProperty("test.user.first_name") + ".*"), true);
-					isLoggedIn = true;
-				}
-			}
-			listingsComponent = new ListingsComponent(driver, appContent, categoryName, categoryResource);
-			listingsComponent.waitUntilFirstGenericProductIsWishListed();
-			headerIconsComponent.waitUntilItemsAreWishListed("2");
+			initProductListing();
 		} else {
 			throw new NoSuchElementException("Haven't clicked on any category!");
 		}
 	}
 
-	private void dismissPromoPopup() {
+	public void loginOverlayHasAppeared() {
+		hasPopupAppeared(true);
+	}
+
+	public void login(String userName) {
+		if (!isLoggedIn) {
+			RegistrationPopup popup = new RegistrationPopup(driver, getChildElement(self, POPUP_LOCATOR), properties);
+			popup.login(userName);
+			String firstName = properties.getProperty("test.user." + userName + ".first_name");
+			waitUntilTextMatches(MY_ACCOUNT_LOCATOR, Pattern.compile(".*" + firstName + ".*"), true);
+			isLoggedIn = true;
+		}
+	}
+
+	public void initProductListing() {
+		listingsComponent = new ListingsComponent(driver, appContent, categoryName, categoryResource);
+	}
+
+	public void dismissPromoPopup() {
 		if (hasPopupAppeared(false)) {
 			RegistrationPopup popup = new RegistrationPopup(driver, getChildElement(self, POPUP_LOCATOR), properties);
 			popup.dismiss();
@@ -104,5 +113,10 @@ public class WestwingNowHomePage extends SeleniumBase {
 
 	private boolean hasPopupAppeared(boolean throwException) {
 		return waitUntilNumberOfChildElementsToBe(self, WestwingNowHomePage.POPUP_LOCATOR, 1, throwException);
+	}
+
+	public void waitUntilFirstGenericProductIsWishListed() {
+		listingsComponent.waitUntilFirstGenericProductIsWishListed();
+		headerIconsComponent.waitUntilItemsAreWishListed("1");
 	}
 }

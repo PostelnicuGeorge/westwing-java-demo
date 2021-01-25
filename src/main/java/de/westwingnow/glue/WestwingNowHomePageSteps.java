@@ -1,20 +1,69 @@
 package de.westwingnow.glue;
 
 import de.westwingnow.models.WestwingNowHomePage;
-import de.westwingnow.selenium.SeleniumHooks;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.openqa.selenium.WebDriver;
 
-public class WestwingNowHomePageSteps extends SeleniumHooks {
+import java.util.Properties;
+
+public class WestwingNowHomePageSteps {
 	private WestwingNowHomePage homePage;
+	private final WebDriver webDriver;
+	private final Properties properties;
+
+	public WestwingNowHomePageSteps(WebDriver webDriver, Properties properties) {
+		this.webDriver = webDriver;
+		this.properties = properties;
+	}
 
 	@Given("I am on the WestwingNow home page {string}")
-	public void iAmOnTheWestwingNowHomePage(String arg0) {
+	public void iAmOnTheWestwingNowHomePage(String url) {
+		webDriver.get(url);
 		homePage = new WestwingNowHomePage(webDriver, properties);
 	}
 
 	@When("I click on {string}")
 	public void iClickOn(String navigationName) {
 		homePage.clickNavigation(navigationName);
+	}
+
+	@Then("I should see product listing page with a list of products")
+	public void iShouldSeeProductListingPageWithAListOfProducts() {
+		homePage.initProductListing();
+	}
+
+
+	@When("I click on wish list icon of the first found product")
+	public void iClickOnWishListIconOfTheFirstFoundProduct() {
+		homePage.wishListFirstGenericProduct();
+	}
+
+	@Then("I should see the login or registration overlay")
+	public void iShouldSeeTheLoginOrRegistrationOverlay() {
+		homePage.loginOverlayHasAppeared();
+	}
+
+	@When("I switch to login form of the overlay and I log in with {string} credentials")
+	public void iSwitchToLoginFormOfTheOverlayAndILogInWithCredentials(String userName) {
+		homePage.login(userName);
+	}
+
+	@Then("the product should be added to the wish list")
+	public void theProductShouldBeAddedToTheWishList() {
+		homePage.waitUntilFirstGenericProductIsWishListed();
+	}
+
+	@And("I go to the wish list page ​{string}")
+	public void iGoToTheWishListPage​(String page) {
+		webDriver.get(page);
+		throw new UnsupportedOperationException("iGoToTheWishListPage");
+	}
+
+	@And("I delete the first product from my wish list")
+	public void iDeleteTheFirstProductFromMyWishList() {
+		throw new UnsupportedOperationException("iDeleteTheFirstProductFromMyWishList");
 	}
 }

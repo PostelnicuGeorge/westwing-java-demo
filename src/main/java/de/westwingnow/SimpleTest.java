@@ -1,7 +1,7 @@
 package de.westwingnow;
 
 import de.westwingnow.models.WestwingNowHomePage;
-import de.westwingnow.selenium.SeleniumHooks;
+import de.westwingnow.glue.SeleniumHooks;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 

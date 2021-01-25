@@ -5,6 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import java.util.Objects;
 import java.util.Properties;
 
 public class RegistrationPopup extends SeleniumBase {
@@ -28,9 +29,13 @@ public class RegistrationPopup extends SeleniumBase {
 		this.properties = properties;
 	}
 
-	public void login() {
-		insertTextIntoInput(getElement(EMAIL_LOCATOR), properties.getProperty("test.user.email"));
-		insertTextIntoInput(getElement(PASS_LOCATOR), properties.getProperty("test.user.pass"));
+	public void login(String userName) {
+		insertTextIntoInput(getElement(EMAIL_LOCATOR), userName);
+		String password = properties.getProperty("test.user." + userName + ".pass");
+		if (Objects.isNull(password)) {
+			throw new RuntimeException("Property: " + "test.user." + userName + ".pass" + " not found in the DB!");
+		}
+		insertTextIntoInput(getElement(PASS_LOCATOR), password);
 		clickButton(getElement(ACCEPT_TERMS_AND_CONDITIONS_LOCATOR));
 		clickButton(getElement(LOGIN_LOCATOR));
 	}
