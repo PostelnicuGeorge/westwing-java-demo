@@ -28,6 +28,7 @@ public class WestwingNowHomePage extends SeleniumBase {
 	private WebElement appContent;
 	private List<WebElement> navButtons = new ArrayList<>();
 	private ListingsComponent listingsComponent;
+	private HeaderIconsComponent headerIconsComponent;
 	private boolean isLoggedIn;
 	private String categoryResource;
 	private String categoryName;
@@ -49,6 +50,7 @@ public class WestwingNowHomePage extends SeleniumBase {
 		waitUntilNumberOfChildElementsToBe(self, APP_CONTENT_LOCATOR, 1, true);
 		header = getChildElement(self, HEADER_LOCATOR);
 		appContent = getChildElement(self, APP_CONTENT_LOCATOR);
+		headerIconsComponent = new HeaderIconsComponent(driver, header);
 	}
 
 	public void clickNavigation(String navigationName) {
@@ -84,6 +86,7 @@ public class WestwingNowHomePage extends SeleniumBase {
 			}
 			listingsComponent = new ListingsComponent(driver, appContent, categoryName, categoryResource);
 			listingsComponent.waitUntilFirstGenericProductIsWishListed();
+			headerIconsComponent.waitUntilItemsAreWishListed("2");
 		} else {
 			throw new NoSuchElementException("Haven't clicked on any category!");
 		}
