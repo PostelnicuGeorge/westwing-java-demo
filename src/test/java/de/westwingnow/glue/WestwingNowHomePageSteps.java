@@ -1,6 +1,6 @@
-package westwingnow.glue;
+package de.westwingnow.glue;
 
-import westwingnow.models.WestwingNowHomePage;
+import de.westwingnow.models.WestwingNowHomePage;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;

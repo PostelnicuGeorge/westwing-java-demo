@@ -1,7 +1,7 @@
-package westwingnow;
+package de.westwingnow;
 
-import westwingnow.glue.Controller;
-import westwingnow.models.WestwingNowHomePage;
+import de.westwingnow.glue.Controller;
+import de.westwingnow.models.WestwingNowHomePage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
