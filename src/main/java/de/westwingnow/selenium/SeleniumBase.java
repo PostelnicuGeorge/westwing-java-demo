@@ -15,7 +15,7 @@ public abstract class SeleniumBase {
 
 	public SeleniumBase(WebDriver driver) {
 		this.driver = driver;
-		this.wait = new WebDriverWait(driver, 15);
+		this.wait = new WebDriverWait(driver, 60);
 //		wait.ignoring(StaleElementReferenceException.class);
 		wait.ignoring(NoSuchElementException.class);
 		wait.ignoring(NullPointerException.class);
@@ -79,6 +79,10 @@ public abstract class SeleniumBase {
 
 	protected boolean waitUntilTextMatches(By locator, Pattern pattern, boolean throwException) {
 		return untilCondition(ExpectedConditions.textMatches(locator, pattern), throwException);
+	}
+
+	protected boolean waitUntilInvisibilityOfElement(WebElement element, boolean throwException) {
+		return this.untilCondition(ExpectedConditions.invisibilityOf(element), throwException);
 	}
 
 	protected boolean untilCondition(ExpectedCondition<Boolean> expectedCondition,
