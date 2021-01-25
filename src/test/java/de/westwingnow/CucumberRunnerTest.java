@@ -11,5 +11,5 @@ import static io.cucumber.junit.CucumberOptions.SnippetType.CAMELCASE;
 		glue = {"de.westwingnow.glue"},
 		plugin = {"pretty", "summary"},
 		snippets = CAMELCASE)
-public class JUnitCucumberMain {
+public class CucumberRunnerTest {
 }
