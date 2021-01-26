@@ -19,12 +19,12 @@ public class WestwingNowHomePageSteps {
 	public WestwingNowHomePageSteps(Controller controller) {
 		this.webDriver = controller.getWebDriver();
 		this.properties = controller.getProperties();
-		this.homePage = new WestwingNowHomePage(webDriver, properties);
 	}
 
 	@Given("I am on the WestwingNow home page {string}")
 	public void iAmOnTheWestwingNowHomePage(String url) {
-		homePage.init(url);
+		webDriver.get(url);
+		homePage = new WestwingNowHomePage(webDriver, properties);
 	}
 
 	@When("I click on {string}")
@@ -36,7 +36,6 @@ public class WestwingNowHomePageSteps {
 	public void iShouldSeeProductListingPageWithAListOfProducts() {
 		homePage.initProductListing();
 	}
-
 
 	@When("I click on wish list icon of the first found product")
 	public void iClickOnWishListIconOfTheFirstFoundProduct() {
@@ -58,11 +57,11 @@ public class WestwingNowHomePageSteps {
 		homePage.waitUntilFirstGenericProductIsWishListed();
 	}
 
-	@And("I go to the wish list page ​{string}")
+/*	@And("I go to the wish list page ​{string}")
 	public void iGoToTheWishListPage​(String url) {
 		webDriver.get(url);
 		wishListPage = new WestwingNowWishlistPage(webDriver);
-	}
+	}*/
 
 	@And("I delete the first product from my wish list")
 	public void iDeleteTheFirstProductFromMyWishList() {

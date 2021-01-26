@@ -37,20 +37,23 @@ public class ListingsComponent extends SeleniumBase {
 		waitUntilNumberOfChildElementsToBe(self, SUBTITLE_LOCATOR, 1, true);
 		waitUntilNumberOfChildElementsToBe(self, TITLE_LOCATOR, 1, true);
 		waitUntilTextMatches(SUBTITLE_LOCATOR, Pattern.compile(".* Produkte"), true);
-		waitUntilTextMatches(TITLE_LOCATOR, Pattern.compile(".*" + name +".*"), true);
+		waitUntilTextMatches(TITLE_LOCATOR, Pattern.compile(".*" + name + ".*"), true);
 	}
 
-	public WebElement getFirstGenericProduct() {
-		return getChildElement(self, GENERIC_PRODUCT_LOCATOR);
-	}
-
-	public List<WebElement> getGenericProducts() {
+	private List<WebElement> getGenericProducts() {
 		return getChildElements(self, GENERIC_PRODUCT_LOCATOR);
 	}
 
 	public void wishListFirstGenericProduct() {
-		WebElement firstGenericProduct = getFirstGenericProduct();
-		clickButton(getChildElement(firstGenericProduct, WISH_LIST_LOCATOR));
+		wishListGenericProduct(0);
+	}
+
+	public void wishListGenericProduct(int number) {
+		List<WebElement> genericProducts = getGenericProducts();
+		if (number < 0 || number > genericProducts.size()) {
+			throw new RuntimeException("Wish list number: " + number + " is out of bounds: " + genericProducts.size());
+		}
+		clickButton(getChildElement(genericProducts.get(number), WISH_LIST_LOCATOR));
 	}
 
 	public void waitUntilFirstGenericProductIsWishListed() {

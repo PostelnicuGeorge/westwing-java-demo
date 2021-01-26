@@ -37,10 +37,10 @@ public class WestwingNowHomePage extends SeleniumBase {
 		super(driver);
 		this.properties = properties;
 		isLoggedIn = false;
+		init();
 	}
 
-	public void init(String url) {
-		driver.get(url);
+	private void init() {
 		untilElement(ExpectedConditions.visibilityOfElementLocated(SELF_LOCATOR), true);
 		self = getElement(SELF_LOCATOR);
 		waitUntilNumberOfChildElementsToBe(self, HEADER_LOCATOR, 1, true);
