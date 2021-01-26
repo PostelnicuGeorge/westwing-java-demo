@@ -9,7 +9,7 @@ import static io.cucumber.junit.CucumberOptions.SnippetType.CAMELCASE;
 @RunWith(Cucumber.class)
 @CucumberOptions(features = {"classpath:features/"},
 		glue = {"de.westwingnow.glue"},
-		plugin = {"pretty", "summary"},
+		plugin = {"pretty", "html:target/cucumber"},
 		snippets = CAMELCASE)
 public class CucumberRunnerTest {
 }
