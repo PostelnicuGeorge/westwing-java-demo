@@ -6,6 +6,9 @@ import io.cucumber.java.Scenario;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 
+import java.net.MalformedURLException;
+import java.util.Objects;
+
 public class SeleniumHooks {
 	private final Controller controller;
 
@@ -14,15 +17,17 @@ public class SeleniumHooks {
 	}
 
 	@Before
-	public void setup() {
+	public void setup() throws MalformedURLException {
 		controller.setup();
 	}
 
 	@After
 	public void destroy(Scenario scenario) {
 		if (scenario.isFailed()) {
-			byte[] screenshot = ((TakesScreenshot) controller.getWebDriver()).getScreenshotAs(OutputType.BYTES);
-			scenario.attach(screenshot, "image/png", "name");
+			if (Objects.nonNull(controller.getWebDriver())) {
+				byte[] screenshot = ((TakesScreenshot) controller.getWebDriver()).getScreenshotAs(OutputType.BYTES);
+				scenario.attach(screenshot, "image/png", "name");
+			}
 		}
 		controller.destroy();
 	}
