@@ -57,11 +57,11 @@ public class WestwingNowHomePageSteps {
 		homePage.waitUntilFirstGenericProductIsWishListed();
 	}
 
-/*	@And("I go to the wish list page ​{string}")
+	@And("I go to the wish list page ​{string}")
 	public void iGoToTheWishListPage​(String url) {
 		webDriver.get(url);
 		wishListPage = new WestwingNowWishlistPage(webDriver);
-	}*/
+	}
 
 	@And("I delete the first product from my wish list")
 	public void iDeleteTheFirstProductFromMyWishList() {
